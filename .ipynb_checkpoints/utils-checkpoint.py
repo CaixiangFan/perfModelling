@@ -66,9 +66,8 @@ class ProcHarData:
 
 class ProcLocustData:
     
-    def __init__(self,locustdata_file,sheet_name):
-        self.locustdata = locustdata_file
-        self.task = sheet_name
+    def __init__(self,locustdata_file):
+        self.locustfile = locustdata_file
     
     
     def load2DF(self):
@@ -76,22 +75,22 @@ class ProcLocustData:
         load data and return statistics dataframe.
         -----------------------
         Parameters:
-            sheet_name: string
-                One of the sheet names ['prepareTransfer', 'sendTrytes','sendTransfer', 'ts', 'pow', 'bc']
+            locustdata_file: string
+                path and filename
         
         Returns:
             df_statics: DataFrame
                 Statistics (mean values) dataframe of a specific task.
         -----------------------
         """
-        df = pd.read_excel(self.locustdata, sheet_name=self.task)
+        df = pd.read_csv(self.locustfile)
+        df.dropna(inplace=True)
         df = df.loc[(df['User Count'] % 10 == 0)]
-        df_statics = df.groupby(by='User Count').mean()
-        return df_statics
+        
+        return df
     
     
-    def plotER(self):
-        df = self.load2DF()
+    def plotER(self,df,name):
         
         fig=plt.figure()
 
@@ -107,5 +106,5 @@ class ProcLocustData:
 
         plt.legend(handles,labels,loc='upper left')
 
-        plt.title('Mean Response Time against User Count ({})'.format(self.task))
+        plt.title('Mean Response Time against User Count ({})'.format(name))
         plt.show()
