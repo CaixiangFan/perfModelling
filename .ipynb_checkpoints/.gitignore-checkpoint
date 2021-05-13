@@ -1,3 +1,5 @@
 *.har
 *.json
 *.png
+*.xlsx
+*.csv
