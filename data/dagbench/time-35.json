@@ -1,0 +1,13 @@
+{
+	"latency": [
+		189.635
+	],
+	"prepare_time": [
+		181.925
+	],
+	"send_time": [
+		12.624
+	],
+	"send_times": 1,
+	"message": "ONE"
+}
